@@ -27,9 +27,14 @@ def enter_adj_matrix(num_rows):
             if i == j:
                 matrix[i][j] = 0
             else:
-                matrix[i][j] = int(input("{} e {} : ".format(i, j)))
-                matrix[j][i] = matrix[i][j]
-
+                while True:
+                    try:
+                        matrix[i][j] = int(input("{} e {} : ".format(i, j)))
+                        matrix[j][i] = matrix[i][j]
+                        break
+                    except ValueError:
+                        print("Valor inválido")
+                    
     return matrix
 
 
