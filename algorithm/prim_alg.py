@@ -9,6 +9,9 @@ def peso_total(G):
 
 
 def prim(V, adjMatrix):
+    if V == 1:
+        return [[{0, 0}, 0]], 0
+
     vertex_inic = vertex = randint(0, V-1)
     MST = []
     edges = []

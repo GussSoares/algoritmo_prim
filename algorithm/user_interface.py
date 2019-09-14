@@ -36,17 +36,23 @@ def enter_adj_matrix(num_rows):
 def create_adj_matrix(num_vertex, G):
     adjMatrix = create_sqr_matrix(num_vertex)
 
-    for e in range(len(G)):
-        i = G[e][0].pop()
-        j = G[e][0].pop()
-        adjMatrix[i][j] = G[e][1]
-        adjMatrix[j][i] = G[e][1]
+    if num_vertex > 1:
+        for e in range(len(G)):
+            i = G[e][0].pop()
+            j = G[e][0].pop()
+            adjMatrix[i][j] = G[e][1]
+            adjMatrix[j][i] = G[e][1]
 
     return adjMatrix
 
 
 def prompt_user():
     num_vertex = int(input("Quantos vértices?\n R: "))
+
+    while num_vertex == 0:
+        print("\nGrafo Nulo. Insira um valor maior que zero.")
+        num_vertex = int(input("Quantos vértices?\n R: "))
+
     adj_matriz = enter_adj_matrix(num_vertex)
 
     #chama algoritmos
