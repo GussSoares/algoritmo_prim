@@ -24,16 +24,16 @@ def enter_adj_matrix(num_rows):
 
     for i in range(num_rows):
         for j in range(i, num_rows):
-            if i == j:
-                matrix[i][j] = 0
-            else:
-                while True:
-                    try:
-                        matrix[i][j] = int(input("{} e {} : ".format(i, j)))
-                        matrix[j][i] = matrix[i][j]
-                        break
-                    except ValueError:
-                        print("Valor inválido")
+            # if i == j:
+            #     matrix[i][j] = 0
+            # else:
+            while True:
+                try:
+                    matrix[i][j] = int(input("{} e {} : ".format(i, j)))
+                    matrix[j][i] = matrix[i][j]
+                    break
+                except ValueError:
+                    print("Valor inválido")
                     
     return matrix
 
@@ -52,21 +52,26 @@ def create_adj_matrix(num_vertex, G):
 
 
 def prompt_user():
-    num_vertex = int(input("Quantos vértices?\n R: "))
-
-    while num_vertex == 0:
-        print("\nGrafo Nulo. Insira um valor maior que zero.")
+    while True:
         num_vertex = int(input("Quantos vértices?\n R: "))
 
-    adj_matriz = enter_adj_matrix(num_vertex)
+        while num_vertex == 0:
+            print("\nGrafo Nulo. Insira um valor maior que zero.")
+            num_vertex = int(input("Quantos vértices?\n R: "))
 
-    #chama algoritmos
-    mst, vertex_inic = prim_alg.prim(num_vertex, adj_matriz)
-    custo = prim_alg.peso_total(mst)
+        adj_matriz = enter_adj_matrix(num_vertex)
 
-    print("\nVértice Inicial escolhido Randomicamente:", vertex_inic)
-    print("\nMatriz de Adjacência do Grafo Informado:")
-    print_matrix(adj_matriz)
-    print("\nMatriz de Adjacência da Árvore Geradora Mínima:")
-    print_matrix(create_adj_matrix(num_vertex, mst))
-    print("\nCusto da Árvore Geradora Mínima:", custo)
+        #chama algoritmos
+        try:
+            mst, vertex_inic = prim_alg.prim(num_vertex, adj_matriz)
+            custo = prim_alg.peso_total(mst)
+
+            print("\nVértice Inicial escolhido Randomicamente:", vertex_inic)
+            print("\nMatriz de Adjacência do Grafo Informado:")
+            print_matrix(adj_matriz)
+            print("\nMatriz de Adjacência da Árvore Geradora Mínima:")
+            print_matrix(create_adj_matrix(num_vertex, mst))
+            print("\nCusto da Árvore Geradora Mínima:", custo)
+            break
+        except Exception as exc:
+            print("\n{}\n".format(exc))

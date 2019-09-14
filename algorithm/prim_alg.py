@@ -29,6 +29,10 @@ def prim(V, adjMatrix):
             if edges[e][1] < minEdge[1] and not edges[e][0].issubset(visited):
                 minEdge = edges[e]
 
+        # verifica se o grafo é desconexo
+        if minEdge == [set(), float('inf')]:
+            raise Exception("Grafo Desconexo")
+
         edges.pop(edges.index(minEdge))
         MST.append(minEdge)
         aux_set = minEdge[0].copy()
