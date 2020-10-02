@@ -1,19 +1,19 @@
  /*
-  create adjacency matrix for use in prims algorithm
-  note: we could improve the running time of prims algorithm by 
-  implementing a priority queue data structure instead of a matrix
+  Criar matriz de adjacência para uso no algoritmo de Prim
+  Nota: Podemos melhorar o tempo de execução do algoritmo de prim 
+  implementando uma estrutura de fila de prioridade da matriz.
 */
 function createAdjMatrix(V, G) {
   
     var adjMatrix = [];
     
-    // create N x N matrix filled with 0 edge weights between all vertices
+	// Crie uma matriz N x N  preenchida com arestas de peso 0 entre todos os vértices
     for (var i = 0; i < V; i++) { 
       adjMatrix.push([]);
       for (var j = 0; j < V; j++) { adjMatrix[i].push(0); }
     }
     
-    // populate adjacency matrix with correct edge weights
+	// Popule a matriz de adjacencia com os pesos corretos das arestas
     for (var i = 0; i < G.length; i++) { 
       adjMatrix[G[i][0]][G[i][1]] = G[i][2];
       adjMatrix[G[i][1]][G[i][0]] = G[i][2];
@@ -25,47 +25,47 @@ function createAdjMatrix(V, G) {
   
   function prims(V, G) {
     
-    // create adj matrix from graph
+	//Crie a matriz de adjacencia do grafo
     var adjMatrix = createAdjMatrix(V, G);
     
-    // arbitrarily choose initial vertex from graph
+	// Arbitrariamente escolha o vértice inicial do grafo
     var vertex = 0;
     
-    // initialize empty edges array and empty MST
+	// Inicialize o vetor de arestas vázias e a MST vázia
     var MST = [];
     var edges = [];
     var visited = [];
     var minEdge = [null,null,Infinity];
     
-    // run prims algorithm until we create an MST
-    // that contains every vertex from the graph
+	// Execute o algoritmo de prim até criamos uma MST
+	// que cotenha todos os vértices do grafo
     while (MST.length !== V-1) {
       
-      // mark this vertex as visited
+	  // Marque o vértice como visitado
       visited.push(vertex);
       
-      // add each edge to list of potential edges
+	  // Adicionar cada aresta da lista como potenciais arestas
       for (var r = 0; r < V; r++) {
         if (adjMatrix[vertex][r] !== 0) { 
           edges.push([vertex,r,adjMatrix[vertex][r]]); 
         }
       }
   
-      // find edge with the smallest weight to a vertex
-      // that has not yet been visited
+	  // Ache a aresta com o menor peso para a aresta
+	  // que ainda não tenha sido visitada 
       for (var e = 0; e < edges.length; e++) {
         if (edges[e][2] < minEdge[2] && visited.indexOf(edges[e][1]) === -1) { 
           minEdge = edges[e]; 
         }
       }
   
-      // remove min weight edge from list of edges
+	  // Remove a aresta de menor peso da lista de arestas
       edges.splice(edges.indexOf(minEdge), 1);
   
-      // push min edge to MST
+	  // Coloque a aresta minima para a MST
       MST.push(minEdge);
         
-      // start at new vertex and reset min edge
+	  // Comece em um novo vértice e reinicie a aresta mínima
       vertex = minEdge[1];
       minEdge = [null,null,Infinity];
       
@@ -75,12 +75,12 @@ function createAdjMatrix(V, G) {
     
   }
   
-  // graph vertices are actually represented as numbers
-  // like so: 0, 1, 2, ... V-1
+  // Grafos são representados atualmente como números
+  // Por exemplo: 0, 1, 2, ... V-1
   var a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
   
-  // graph edges with weights
-  // diagram of graph is shown above
+  // Aresta de grafos com peso
+  // diagrama do grafo é mostrado a seguir
   var graph = [
     [a,b,2],
     [a,c,3],
@@ -93,5 +93,5 @@ function createAdjMatrix(V, G) {
     [e,f,5]
   ];
   
-  // pass the # of vertices and the graph to run prims algorithm 
+  // Passe o número de vértices e o grafo para executar o algoritmo de prim
   prims(6, graph); 
